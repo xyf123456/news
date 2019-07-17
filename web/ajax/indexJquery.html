@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="../js/jquery-3.4.1.min.js"></script>
+</head>
+<body>
+<form action="" method="POST">
+    <table>
+        <tr>
+            <td>用户名</td>
+            <td><input type="text" name="username" id="username"><span style="color: red">*</span></td>
+            <td>
+                <div id="nameDiv"></div>
+            </td>
+        </tr>
+    </table>
+    <input type="button" id="subBtn" value="提交">
+</form>
+<script>
+    $(function () {
+        $("#username").blur(function () {//聚焦事件
+            var username=$("#username").val();
+            if($("#username").val()===null | $("#username").val() === ""){
+                $("#nameDiv").html("请输入用户名");
+            }else {
+//                使用JQuery来进行Ajax异步请求
+                $.ajax({
+                    "url":"../user",//URL.String类型
+                    "type":"POST",//AJAX请求的方式，String类型
+                    "data":"username="+username,//AJAX请求传递的数据，String类型，Array类型，PlainObject
+                    "dataType":"text",//预期服务器返回的数据类型
+                    "success":callBack,//成功后的回调函数
+                    "error":function () {
+                        alert("验证失败，请求联系管理员");
+                    },
+                    "timeout":30000, //超时时间：30秒,如果服务器响应时间超过了 设置的时间，则进入 ERROR （错误处理）
+                    "global":true,//是否出发全局的Ajax事件
+                    "beforeSend": function () {
+                        $("#subBtn").attr("disabled","disabled");
+                    },//发送请求前调用的函数，可以设置请求头，jqxhr:jqXHR是XMLHttpRequest超集,settings:当前ajax()方法的settings对象
+                    "complete": function () {
+                        $("#subBtn").removeAttr("disabled");
+                    }//Function(jqxhr,String textStatus),textStatus:请求状态的字符串
+                });
+            }
+        });
+    });
+    //回调函数，来操作下客户端操作
+    function callBack(data) {
+            if (data.trim()==="true"){
+                $("#nameDiv").html("用户名已经被占用");
+            }else {
+                $("#nameDiv").html("用户名可以使用");
+            }
+    }
+</script>
+</body>
+</html>

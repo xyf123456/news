@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Ajax请求返回类型为XML</title>
+    <script src="../js/jquery-3.4.1.min.js"></script>
+</head>
+<body>
+<input type="button" id="btn" value="请求获取XML数据"/>
+<div id="xmlContent"></div>
+<script>
+    $(document).ready(function () {
+        $("#btn").click(function () {
+            //Ajax异步请求获取XML数据
+            $.post("../servletXml",null,callBack);
+            function callBack(data) {
+                console.log(data);
+                //转换成Jquery对象
+               var content=$(data);
+                //获取子节点通过children()
+                var message =content.children();
+                var message1 =message.children();
+                var message2 =message1.children();
+                //得到元素节点的文本节点信息
+                console.log(message);
+                console.log(message1);
+                console.log(message2);
+               console.log(message.text());//只要是根元素底下文本信息，全部输出
+               console.log(message1.text());//只要是Brand元素底下文本信息，全部输出
+//               $("#xmlContent").html(message.text());
+            }
+        });
+    })
+</script>
+</body>
+</html>

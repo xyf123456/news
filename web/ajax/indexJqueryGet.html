@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="../js/jquery-3.4.1.min.js"></script>
+</head>
+<body>
+<form action="" method="POST">
+    <table>
+        <tr>
+            <td>用户名</td>
+            <td><input type="text" name="username" id="username"><span style="color: red">*</span></td>
+            <td>
+                <div id="nameDiv"></div>
+            </td>
+        </tr>
+    </table>
+    <input type="button" id="subBtn" value="提交">
+</form>
+</body>
+<script>
+    /*$(function () {
+        $("#username").blur(function () {
+            var username=$("#username").val();
+            if($("#username").val()===null | $("#username").val() === ""){
+                $("#nameDiv").html("请输入用户名");
+            }else{
+                $.get("../user","username="+username,callBack());
+                function callBack(data) {
+                    console.log(data);
+                    if (data==="true"){
+                        $("#nameDiv").html("用户名已经被占用");
+                    }else {
+                        $("#nameDiv").html("用户名可以使用");
+                    }
+                }
+            }
+        });
+    });*/
+    $(document).ready(function () {
+        $("#username").blur(function () {
+            var username=$("#username").val();
+            if($("#username").val()===null | $("#username").val() === ""){
+                $("#nameDiv").html("请输入用户名");
+            }else{
+//                $.get("../user","username="+username,callBack);
+                $.post("../user","username="+username,callBack);
+            }
+        });
+    });
+
+    function callBack(data) {
+        console.log(data);
+        if (data.trim()==="true"){
+            $("#nameDiv").html("用户名已经被占用");
+        }else {
+            $("#nameDiv").html("用户名可以使用");
+        }
+    }
+
+</script>
+</html>

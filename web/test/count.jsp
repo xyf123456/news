@@ -1,0 +1,29 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ page import="com.bdqn.entity.User" %>
+<%@ page import="java.util.ArrayList" %><%--
+  Created by IntelliJ IDEA.
+  User: Administrator
+  Date: 2019/6/6 0006
+  Time: 下午 1:17
+  To change this template use File | Settings | File Templates.
+--%>
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%
+    String path = request.getContextPath();
+    String basePath = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort() + path + "/";
+%>
+
+<html>
+<head>
+    <title>Title</title>
+</head>
+<body>
+当前在线用户人数:${applicationScope.userNumber }<br/>
+<%--<%
+    ArrayList<User> userList = (ArrayList<User>) request.getServletContext().getAttribute("userList");
+%>
+<c:forEach var="user" items="${applicationScope.userList}">
+    <span>IP:${user.ipString},FirstTime:${user.firstTimeString}，SessionId:${user.sessionIdString}</span>
+</c:forEach>--%>
+</body>
+</html>

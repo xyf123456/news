@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>注册验证</title>
+    <script src="../js/jquery-3.4.1.min.js"></script>
+</head>
+<body>
+<!--<form action="" method="get">-->
+<form action="" method="POST">
+    <table>
+        <tr>
+            <td>用户名</td>
+            <td><input type="text" name="username" id="username"><span style="color: red">*</span></td>
+            <td>
+                <div id="nameDiv"></div>
+            </td>
+        </tr>
+    </table>
+</form>
+<script>
+
+    $(function () {
+        //    聚焦事件
+        $("#username").blur(function () {
+            var username=$("#username").val();
+            if($("#username").val()===null | $("#username").val() === ""){
+                $("#nameDiv").html("请输入用户名");
+            }else{//验证用户名是否合法
+                //1.创建XMLHttpRequest对象
+                xmlHttpRequest=createXmlHttpRequest();
+                //2.设置回调函数(包含了客户端的刷新操作)
+                xmlHttpRequest.onreadystatechange = callBack;
+                //3.初始化XMLHttpRequest组件
+//                var URL = "../user?username="+username;
+                var URL = "../user";
+//                4、创建HTTP请求
+//                xmlHttpRequest.open("GET",URL,true);//GET请求
+                xmlHttpRequest.open("POST",URL,true);//POST请求
+                xmlHttpRequest.setRequestHeader("Content-Type","application/x-www-form-urlencoded");//设置请求头
+                var data = "username="+username;
+                //5.发送请求send(String data):用来发送POST请求，可以传递一些参数
+//                xmlHttpRequest.send();//采用的GET请求方式发送
+                xmlHttpRequest.send(data);//采用的POST请求方式发送
+//                回调函数
+                function callBack() {
+                   if(xmlHttpRequest.readyState===4&& xmlHttpRequest.status===200){
+                       var data=xmlHttpRequest.responseText;
+                       console.log(data);
+                       console.log(xmlHttpRequest.readyState);
+                       console.log(xmlHttpRequest.status);
+                       if (data.trim()=="true"){
+                           $("#nameDiv").html("用户名已经被占用");
+                       }else {
+                           $("#nameDiv").html("用户名可以使用");
+                       }
+                   }
+                }
+            }
+        })
+    });
+
+
+
+
+    function createXmlHttpRequest() {
+
+        if(window.XMLHttpRequest){//返回值为true时说明是新版本IE或其他浏览器
+            return new XMLHttpRequest();
+        }else{//返回值为false时说明是老版本IE浏览器（IE5和IE6）
+            return new ActiveXObject("Microsoft.XMLHTTP");
+        }
+    }
+</script>
+</body>
+</html>

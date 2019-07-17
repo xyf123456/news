@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>JSON格式的数据</title>
+    <script src="../js/jquery-3.4.1.min.js"></script>
+    <style>
+        #tb{
+            border: 1px solid #ad19b6;
+        }
+        #tb td{
+            border: 1px solid #ad19b6;
+        }
+        table tr{
+            border: 1px solid #45b62d;
+        }
+    </style>
+</head>
+<body>
+    <div id="objectDiv">
+        <table>
+            <tbody>
+            <tr>
+                <td>姓名</td>
+                <td>年龄</td>
+                <td>性别</td>
+            </tr>
+            </tbody>
+            <tbody id="tb">
+
+            </tbody>
+        </table>
+    </div>
+<script>
+    $(function () {
+        /* var arr1 = new Array(3);
+     arr1[0] = "桃子";
+     arr1[1] = "苹果";
+     arr1[2] = "樱桃";*/
+        //       var arr1 = [2,3,4];
+        //       var arr2 = ["桃子","苹果","樱桃"];
+        //       JSON(JavaScript Object Notation)
+        //       name—>value(String ,Number,boolean,null,对象，数组)
+        //        var json1 = {"name":null,"name":"苹果","name":"苹果"};
+        var user = [{"name":"张三","age":30,"sex":1},{"name":"李四","age":23,"sex":0},{"name":"秦始皇","age":23,"sex":0}];
+        //转换成jquery对象
+        var $user=$(user);
+        //遍历$user对象
+        $user.each(function () {
+            $("#tb").append("<tr><td>"+this.name+"</td><td>"+this.age+"</td><td>"+this.sex+"</td></tr>");
+        });
+
+    });
+    /*$(document).ready(function () {
+        var user1 = {"name":"张三","age":30,"sex":1};
+        $("#objectDiv").append("<table id='table1'><tr><td>"+user1.name+"</td><td>"+user1.age+"</td><td>"+user1.sex+"</td></tr></table>");
+    })*/
+
+</script>
+</body>
+</html>
